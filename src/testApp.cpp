@@ -5,11 +5,15 @@ void testApp::setup(){
     ofBackground(60, 120, 200);
     boardX = 50;
     boardY = 50;
-    gridSize = 100;
-    board = new GameBoard(boardX, boardY, 50, 10);
+    gridSize = 50;
+    cellSize = 10;
+    board = new GameBoard(boardX, boardY, gridSize, cellSize);
     gameSetup = true;
     lastUpdate = ofGetElapsedTimeMillis();
     updateTime = 800;
+    moved = false;
+    mouseX = 0;
+    mouseY = 0;
 }
 
 //--------------------------------------------------------------
@@ -57,22 +61,33 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-
+    mouseX = x;
+    mouseY = y;
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
+    // check if mouse has moved at least a cell
+    int xDist = x - mouseX;
+    int yDist = y - mouseY;
+    int cellDiag = cellSize * sqrt(2);
+    int diagDist = sqrt(xDist^2 + yDist^2);
+    if ( (abs(xDist) > cellSize) || (abs(yDist) > cellSize) || (abs(diagDist) > cellDiag) ) {
+        board->mousePress(x,y);
+        mouseX =  x;
+        mouseY = y;
+    }
+    // maybe have board->mousePress() check if mouse has switched cells -- Cleaner?
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+    board->mousePress(x,y);
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-    board->mousePress(x,y);
+    //board->mousePress(x,y);
 }
 
 //--------------------------------------------------------------
