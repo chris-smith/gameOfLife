@@ -14,29 +14,46 @@
 
 class GameBoard {
 public:
-    GameBoard(int,int,int,int);             // x,y position, grid size
+    GameBoard(int,int,int,int);             // x,y position, grid size, cell size
     ~GameBoard();
-    void set(int, int, bool);           // sets cell at position to state
-    void update();                      // tell each cell to update
-    void draw();                        // tell each cell to draw itself
-    void mousePress(int, int);          // sets cell value if mouse press within gameboard
-    void reset();
     
-    int height();                       // get height of game board
-    int width();                        // get width of game board
+    void update();                          // tell each cell to update
+    void draw();                            // tell each cell to draw itself
+    //void mousePress(int, int);            // sets cell value if mouse press within gameboard
+    void reset();                           // reset to initial configuration
+    void clear();                           // clear game
+    void save();
+    void running(bool);                     // sets board to setup, playing
+    bool running();
+    void set(int, int, bool);               // sets cell at position to state
+    
+    int height();                           // get height of game board
+    int width();                            // get width of game board
     
 private:
     GameBoard();
-    int _getCellNeighbors(int, int);    // get living neighbors of the cell
+    int _getCellNeighbors(int, int);        // get living neighbors of the cell
     int _value(int, int);
+    void _constrain(int&);
+    void _constrain(int&, int&);            // constrain indices to within gridSize
+    bool _isOnGameBoard(int,int);
+    void _setCells(ofMouseEventArgs&);
+    
+    // events
+    void _mousePressed(ofMouseEventArgs&);
+    void _mouseDragged(ofMouseEventArgs&);
+    void _mouseReleased(ofMouseEventArgs&);
     
     std::vector< std::vector< Cell > > _cells;
+    std::vector< std::vector< Cell > > _initialCells;
     int _xPos;
     int _yPos;
-    int _cellX;                         //  tracks last cell updated during setup
-    int _cellY;                         //  tracks last cell updated during setup
+    int _cellX;                             //  tracks last cell updated during setup
+    int _cellY;                             //  tracks last cell updated during setup
     int _gridSize;
     int _cellSize;
+    bool _running;
+    bool _settingVals;
 };
 
 #endif /* defined(__gameOfLife__gameBoard__) */

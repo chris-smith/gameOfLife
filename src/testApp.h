@@ -1,6 +1,8 @@
 #pragma once
 
 #include "gameBoard.h"
+#include "ofxGui.h"
+#include "slider.h"
 //#include "ofMain.h"
 
 class testApp : public ofBaseApp{
@@ -19,14 +21,16 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void updateTimeChanged(int & newUpdateTime);
+    
         GameBoard* board;
+        Slider updateTime;                  // millis to wait to update during run
         int boardX;
         int boardY;
         int gridSize;
         int cellSize;
-        bool gameSetup;                     // true if game is in setup
-        unsigned long long lastUpdate;
-        int updateTime;                     // millis to update during run
+        unsigned long long lastUpdate;      // millis of boardgame update time
+    
         bool play;                          // play/pause game
         ofColor highlight_bg;
         ofColor highlight_fg;
