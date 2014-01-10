@@ -19,14 +19,15 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        int mouseX, mouseY;
         GameBoard* board;
         int boardX;
         int boardY;
         int gridSize;
         int cellSize;
-        bool gameSetup;     // true if game is being setup, not actively running
+        bool gameSetup;                     // true if game is in setup
         unsigned long long lastUpdate;
-        int updateTime;         // millis to update
-        bool moved;     // tracks mouse movement for game setup
+        int updateTime;                     // millis to update during run
+        bool play;                          // play/pause game
+        ofColor highlight_bg;
+        ofColor highlight_fg;
 };

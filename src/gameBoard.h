@@ -23,6 +23,7 @@ public:
     void reset();
     
     int height();                       // get height of game board
+    int width();                        // get width of game board
     
 private:
     GameBoard();
@@ -32,6 +33,8 @@ private:
     std::vector< std::vector< Cell > > _cells;
     int _xPos;
     int _yPos;
+    int _cellX;                         //  tracks last cell updated during setup
+    int _cellY;                         //  tracks last cell updated during setup
     int _gridSize;
     int _cellSize;
 };

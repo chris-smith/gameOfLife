@@ -5,34 +5,49 @@ void testApp::setup(){
     ofBackground(60, 120, 200);
     boardX = 50;
     boardY = 50;
-    gridSize = 50;
-    cellSize = 10;
+    gridSize = 40;
+    cellSize = 15;
     board = new GameBoard(boardX, boardY, gridSize, cellSize);
     gameSetup = true;
     lastUpdate = ofGetElapsedTimeMillis();
     updateTime = 800;
-    moved = false;
     mouseX = 0;
     mouseY = 0;
+    play = false;
+    highlight_bg = ofColor(80, 140, 220);
+    highlight_fg = ofColor(220, 220, 240);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     ofSetColor(200, 0, 200);
     if (!gameSetup){
-        if ( ofGetElapsedTimeMillis() - lastUpdate > updateTime )
-            board->update();
+        if ( ofGetElapsedTimeMillis() - lastUpdate > updateTime ) {
+            lastUpdate = ofGetElapsedTimeMillis();
+            if (play)
+                board->update();
+        }
     }
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofSetColor(160,160,200);
+    ofSetColor(180,180,220);
     string instructions = "Click on squares to set the initial conditions for the game";
-    string instr2 = "KeyCodes\n\tg --\tStart game\n\tr --\tReset Game";
+    string instr2 = "KeyCodes\n\tp --\tToggle Play/Pause\n\tr --\tReset Game";
     ofDrawBitmapString(ofToString(ofGetFrameRate())+"fps", 10, 15);
-    ofDrawBitmapString(instructions, 20, 20 + board->height() );
-    ofDrawBitmapString(instr2, 20, 40 + board->height() );
+    ofDrawBitmapString(instructions, boardX, 20 + board->height() );
+    ofDrawBitmapString(instr2, boardX, 40 + board->height() );
+    string setup_string = "Game Setup";
+    string running_string = "Game Running";
+    if (gameSetup){
+        ofDrawBitmapStringHighlight(setup_string, 10 + board->width(), boardY + 50, highlight_bg, highlight_fg);
+        ofDrawBitmapString(running_string, 10 + board->width(), boardY + 70);
+    }
+    else{
+        ofDrawBitmapString(setup_string, 10 + board->width(), boardY + 50);
+        ofDrawBitmapStringHighlight(running_string, 10 + board->width(), boardY + 70, highlight_bg, highlight_fg);
+    }
     board->draw();
 }
 
@@ -44,15 +59,17 @@ void testApp::keyPressed(int key){
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
     switch(key) {
-        case 'g':
-            // start game
-            gameSetup = false;
-            break;
         case 'r':
-            //reset game
+            // reset game
             gameSetup = true;
+            play = false;
             board->reset();
             lastUpdate = ofGetElapsedTimeMillis();
+            break;
+        case 'p':
+            // toggle play/pause
+            gameSetup = false;
+            play = !play;
             break;
         default:
             break;
@@ -61,33 +78,25 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-    mouseX = x;
-    mouseY = y;
+
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-    // check if mouse has moved at least a cell
-    int xDist = x - mouseX;
-    int yDist = y - mouseY;
-    int cellDiag = cellSize * sqrt(2);
-    int diagDist = sqrt(xDist^2 + yDist^2);
-    if ( (abs(xDist) > cellSize) || (abs(yDist) > cellSize) || (abs(diagDist) > cellDiag) ) {
+    if (gameSetup)
         board->mousePress(x,y);
-        mouseX =  x;
-        mouseY = y;
-    }
-    // maybe have board->mousePress() check if mouse has switched cells -- Cleaner?
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    board->mousePress(x,y);
+    if (gameSetup)
+        board->mousePress(x,y);
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-    //board->mousePress(x,y);
+    if (gameSetup)
+        board->mousePress(-1,-1);
 }
 
 //--------------------------------------------------------------

@@ -27,6 +27,7 @@ private:
     int _xPos;
     int _yPos;
     int _cellSize;
+    bool _needUpdate;
 };
 
 #endif /* defined(__gameOfLife__cell__) */
