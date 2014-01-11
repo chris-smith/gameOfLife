@@ -5,27 +5,19 @@ void testApp::setup(){
     ofBackground(60, 120, 200, 200);
     boardX = 50;
     boardY = 50;
-    gridSize = 40;
-    cellSize = 15;
-    board = new GameBoard(boardX, boardY, gridSize, cellSize);
+    gridSize = 50;
+    cellSize = 10;
     lastUpdate = ofGetElapsedTimeMillis();
-    //updateTime = 800;
     mouseX = 0;
     mouseY = 0;
     play = false;
     highlight_bg = ofColor(80, 140, 220);
     highlight_fg = ofColor(220, 220, 240);
     
-    // Gui setup
-    /*updateRate.addListener(this, &testApp::updateTimeChanged);
+    // create Game Board
+    board = new GameBoard(boardX, boardY, gridSize, cellSize);
     
-    gui.setup();
-    gui.add( updateRate.setup( "Update Rate", updateTime, 20, 1000 ) );
-    updateRate.setBackgroundColor( ofColor(100,160, 210) );
-    updateRate.setFillColor( ofColor(130,190,240) );
-    updateRate.setPosition( 7 + board->width(), boardY + 90 );
-    updateRate.setSize( ofGetWidth() - (16 + board->width()), 15 );*/
-    
+    // Setup for slider
     updateTime.setBackgroundColor( ofColor(100,160, 210) );
     updateTime.setFillColor( ofColor(130,190,240) );
     updateTime.setPosition( 7 + board->width(), boardY + 120 );
@@ -40,16 +32,15 @@ void testApp::update(){
     if ( board->running() ){
         // if game is live
         if ( ofGetElapsedTimeMillis() - lastUpdate > updateTime ) {
+            // if we need to update the board
             lastUpdate = ofGetElapsedTimeMillis();
+            
+            // check if playing, or paused
             if (play)
                 board->update();
         }
     }
 }
-
-/*void testApp::updateTimeChanged(int & newUpdateTime) {
-    updateTime = newUpdateTime;
-}*/
 
 //--------------------------------------------------------------
 void testApp::draw(){

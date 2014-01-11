@@ -70,6 +70,7 @@ void GameBoard::_mouseReleased(ofMouseEventArgs& e) {
 }
 
 void GameBoard::_setCells(ofMouseEventArgs& e) {
+    // if game is in setup stage
     if (! this->_running) {
         // get cell indices
         int x = this->_xPos;
@@ -103,6 +104,7 @@ void GameBoard::set(int i, int j, bool state) {
 }
 
 void GameBoard::update() {
+    // updates the gameboard to the next state
     for (int i =0; i < this->_gridSize; i++) {
         for (int j = 0; j < this->_gridSize; j++) {
             _cells[i][j].update( this->_getCellNeighbors(i,j) );
@@ -119,6 +121,8 @@ void GameBoard::draw() {
 }
 
 void GameBoard::reset() {
+    // GameBoard should save temporary file with cell data
+    //  reset should load from that
     _cells = _initialCells;
     this->_running = false;
 }
@@ -143,11 +147,13 @@ bool GameBoard::running() {
 }
 
 void GameBoard::_constrain(int & i) {
+    // constrain integer between 0 and gridSize
     i = (i < 0 ? 0 : i);
     i = (i >= this->_gridSize ? this->_gridSize-1 : i);
 }
 
 void GameBoard::_constrain(int& i, int& j) {
+    // constrain indices to within gridSize
     this->_constrain(i);
     this->_constrain(j);
 }
