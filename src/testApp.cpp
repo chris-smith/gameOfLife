@@ -21,7 +21,7 @@ void testApp::setup(){
     updateTime.setBackgroundColor( ofColor(100,160, 210) );
     updateTime.setFillColor( ofColor(130,190,240) );
     updateTime.setPosition( 7 + board->width(), boardY + 120 );
-    updateTime.setSize( ofGetWidth() - (16 + board->width()), 15 );
+    updateTime.setSize( 100, 15 );
     updateTime.setRange( 20, 800 );
     updateTime.setTitle("Update Rate");
 }
@@ -31,7 +31,7 @@ void testApp::update(){
     ofSetColor(200, 0, 200);
     if ( board->running() ){
         // if game is live
-        if ( ofGetElapsedTimeMillis() - lastUpdate > updateTime ) {
+        if ( ofGetElapsedTimeMillis() - lastUpdate > (updateTime.getMax() - updateTime) ) {
             // if we need to update the board
             lastUpdate = ofGetElapsedTimeMillis();
             

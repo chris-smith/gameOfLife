@@ -127,14 +127,14 @@ void GameBoard::draw() {
     }
 }
 
-void GameBoard::reset() {
+void GameBoard::reset(){
     // GameBoard should save temporary file with cell data
     //  reset should load from that
     this->load(this->_tempLoc);
     this->_running = false;
 }
 
-void GameBoard::clear() {
+void GameBoard::clear(){
     // Clear gameboard - set all cell.living to false
     for (int i = 0; i < this->_gridSize; i++) {
         for (int j = 0; j < this->_gridSize; j++) {
@@ -145,6 +145,15 @@ void GameBoard::clear() {
     this->_running = false;
 }
 
+void GameBoard::resize(int gridSize, int cellSize){
+    // resize the gameboard. Necessary for loading patterns, other boards,
+    
+}
+
+void GameBoard::savePattern(string path){
+    // saves minimum bounding rectangle around current pattern
+}
+
 void GameBoard::save(string path){
     if (path == "")
         return; // raise error?
@@ -153,7 +162,6 @@ void GameBoard::save(string path){
     path += ".txt";
     // convert gameboard to text
     string data = this->_boardToText();
-    cout<<data<<"\n";
     // open temp file as write
     ofFile newFile( ofToDataPath(path), ofFile::ReadWrite, false );
     // create file if doesn't exist

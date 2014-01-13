@@ -21,6 +21,8 @@ public:
     void draw();                            // tell each cell to draw itself
     void reset();                           // reset to initial configuration
     void clear();                           // clear game
+    void resize(int, int);                  // resize gameboard -- takes grid size, cell size
+    void savePattern(string);               // save minimum bounding rect around board pattern
     void save(string);                      // save game under name
     void saveTemp();                        // save current board for reset
     void load(string);                      // load specified game
