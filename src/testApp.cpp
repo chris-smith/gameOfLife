@@ -80,8 +80,9 @@ void testApp::keyReleased(int key){
             lastUpdate = ofGetElapsedTimeMillis();
             break;
         case 'p':
-            // toggle play/pause
+            // toggle play/pause, save temporary save
             board->running(true);
+            board->saveTemp();
             play = !play;
             break;
         case 'c':

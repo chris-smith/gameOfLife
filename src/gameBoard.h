@@ -19,10 +19,11 @@ public:
     
     void update();                          // tell each cell to update
     void draw();                            // tell each cell to draw itself
-    //void mousePress(int, int);            // sets cell value if mouse press within gameboard
     void reset();                           // reset to initial configuration
     void clear();                           // clear game
-    void save();
+    void save(string);                      // save game under name
+    void saveTemp();                        // save current board for reset
+    void load(string);                      // load specified game
     void running(bool);                     // sets board to setup, playing
     bool running();
     void set(int, int, bool);               // sets cell at position to state
@@ -38,6 +39,8 @@ private:
     void _constrain(int&, int&);            // constrain indices to within gridSize
     bool _isOnGameBoard(int,int);
     void _setCells(ofMouseEventArgs&);
+    string _boardToText();                  // convert gameboard to data
+    void _setBoardFromString(string);       // convert data to GameBoard
     
     // events
     void _mousePressed(ofMouseEventArgs&);
@@ -46,6 +49,7 @@ private:
     
     std::vector< std::vector< Cell > > _cells;
     std::vector< std::vector< Cell > > _initialCells;
+    string _tempLoc;
     int _xPos;
     int _yPos;
     int _cellX;                             //  tracks last cell updated during setup

@@ -16,6 +16,7 @@ GameBoard::GameBoard(int x,int y,int gridSize, int cellSize) {
     this->_cellSize = cellSize;
     this->_running = false;
     this->_settingVals = false;
+    this->_tempLoc = "temp/_temp";
     std::vector< Cell > temp;
     temp.clear();
     _cells.clear();
@@ -29,10 +30,16 @@ GameBoard::GameBoard(int x,int y,int gridSize, int cellSize) {
             _initialCells[i].push_back( newCell );
         }
     }
+    
     // listen to mouse events
     ofAddListener(ofEvents().mousePressed, this, &GameBoard::_mousePressed);
     ofAddListener(ofEvents().mouseDragged, this, &GameBoard::_mouseDragged);
     ofAddListener(ofEvents().mouseReleased, this, &GameBoard::_mouseReleased);
+    
+    // create temp save directory
+    ofDirectory dir("temp");
+    if ( !dir.exists() )
+        dir.create();
 }
 
 GameBoard::GameBoard() {
@@ -123,19 +130,84 @@ void GameBoard::draw() {
 void GameBoard::reset() {
     // GameBoard should save temporary file with cell data
     //  reset should load from that
-    _cells = _initialCells;
+    this->load(this->_tempLoc);
     this->_running = false;
 }
 
 void GameBoard::clear() {
     // Clear gameboard - set all cell.living to false
-    for (int i =0; i < this->_gridSize; i++) {
+    for (int i = 0; i < this->_gridSize; i++) {
         for (int j = 0; j < this->_gridSize; j++) {
             _cells[i][j].living = false;
             _initialCells[i][j].living = false;
         }
     }
     this->_running = false;
+}
+
+void GameBoard::save(string path){
+    if (path == "")
+        return; // raise error?
+    // remove extension if it exists, add .txt
+    path = ofFilePath::removeExt(path);
+    path += ".txt";
+    // convert gameboard to text
+    string data = this->_boardToText();
+    cout<<data<<"\n";
+    // open temp file as write
+    ofFile newFile( ofToDataPath(path), ofFile::ReadWrite, false );
+    // create file if doesn't exist
+    if ( !newFile.exists() )
+        newFile.create();
+    //write file
+    newFile.writeFromBuffer( data );
+}
+
+void GameBoard::saveTemp(){
+    this->save(this->_tempLoc);
+}
+
+void GameBoard::load(string path){
+    if (path == "")
+        return; // raise error?
+    // remove extension if it exists, add .txt
+    path = ofFilePath::removeExt(path);
+    path += ".txt";
+    // open temp file as write
+    ofFile newFile( ofToDataPath(path), ofFile::ReadWrite, false );
+    // create file if doesn't exist
+    if ( !newFile.exists() )
+        newFile.create();
+    //read file
+    string data = newFile.readToBuffer();
+    this->_setBoardFromString(data);
+}
+
+string GameBoard::_boardToText(){
+    // converts gameBoard into text
+    //  formatting based on ascii Original Life Lexicon
+    string data = "";
+    int i = 0;
+    while (i < this->_gridSize) {
+        for(int j = 0; j < this->_gridSize; j++){
+            data += (this->_cells[i][j].living ? "*" : ".");
+        }
+        i++;
+        if (i < this->_gridSize)
+            data += "\n";
+    }
+    return data;
+}
+
+void GameBoard::_setBoardFromString(string data){
+    // sets GameBoard from string
+    //  NOT ROBUST -- assumes data and current grid size are the same
+    vector< string > lines = ofSplitString(data, "\n");
+    for (int i = 0; i < this->_gridSize; i++) {
+        for (int j = 0; j < this->_gridSize; j++) {
+            _cells[i][j].living = ( lines[i][j] == '*');
+        }
+    }
 }
 
 void GameBoard::running(bool state) {
