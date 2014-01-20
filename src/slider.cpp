@@ -12,7 +12,7 @@
 #define __gameOfLife__slider__cpp
 
 template <class Tp>
-Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max){
+Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max) : BaseGui(x,y,width,height){
     // constructor
     this->_xPos = x;
     this->_yPos = y;
@@ -25,7 +25,7 @@ Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max){
 }
 
 template <class Tp>
-Slider<Tp>::Slider(){
+Slider<Tp>::Slider() : BaseGui(){
     // Default constructor
     this->_xPos = 10;
     this->_yPos = 10;
@@ -55,7 +55,7 @@ void Slider<Tp>::_setup(){
 template <class Tp>
 void Slider<Tp>::_mousePressed( ofMouseEventArgs& e){
     // mouse pressed event
-    if ( !this->_isOnSlider(e.x, e.y) )
+    if ( !this->_isOnGui(e.x, e.y) )
         return;
     this->_settingVal = true;
     this->_sliderPosition = e.x - this->_xPos;
@@ -65,8 +65,8 @@ void Slider<Tp>::_mousePressed( ofMouseEventArgs& e){
 template <class Tp>
 void Slider<Tp>::_mouseDragged(ofMouseEventArgs& e ){
     // mouse dragged event
-    if ( !this->_isOnSlider(e.x, e.y) ) {
-        this->_settingVal = false;
+    if ( !this->_isOnGui(e.x, e.y) ) {
+        //this->_settingVal = false; if mouse moves off slider, stop updating value
         return;
     }
     if (this->_settingVal) {
@@ -94,7 +94,7 @@ bool Slider<Tp>::_isOnSlider(int x, int y) {
 }
 
 template <class Tp>
-Slider<Tp>::operator Tp() {
+Slider<Tp>::operator Tp() const{
     // Tp cast returns value
     return this->val;
 }
@@ -122,69 +122,11 @@ Slider<Tp>& Slider<Tp>::operator=(const Slider &rhs) {
 }
 
 template <class Tp>
-void Slider<Tp>::setPosition(int x, int y) {
-    this->_xPos = x;
-    this->_yPos = y;
-}
-
-template <class Tp>
-void Slider<Tp>::setPosition(ofPoint pt) {
-    this->setPosition(pt.x, pt.y);
-}
-
-template <class Tp>
-void Slider<Tp>::offset(int x, int y) {
-    this->_xPos += x;
-    this->_yPos += y;
-}
-
-template <class Tp>
-void Slider<Tp>::setSize(int width, int height) {
-    this->_width = width;
-    this->_height = height;
-}
-
-template <class Tp>
 void Slider<Tp>::setRange(Tp min, Tp max) {
     this->_min = min;
     this->_max = max;
     this->val = (min + max) / 2;
     this->_sliderPosition = ( this->val - this->_min ) * this->_width / (this->_max - this->_min );
-}
-
-template <class Tp>
-void Slider<Tp>::setBackgroundColor(ofColor color) {
-    this->_bgColor = color;
-}
-
-template <class Tp>
-void Slider<Tp>::setFillColor(ofColor color) {
-    this->_fillColor = color;
-}
-
-template <class Tp>
-void Slider<Tp>::setTextColor(ofColor color) {
-    this->_textColor = color;
-}
-
-template <class Tp>
-void Slider<Tp>::setTitle(string title) {
-    this->_title = title;
-}
-
-template <class Tp>
-ofPoint Slider<Tp>::getPosition() const{
-    return ofPoint(this->_xPos, this->_yPos);
-}
-
-template <class Tp>
-int Slider<Tp>::getHeight() const{
-    return this->_height;
-}
-
-template <class Tp>
-int Slider<Tp>::getWidth() const{
-    return this->_width;
 }
 
 template <class Tp>
@@ -195,26 +137,6 @@ Tp Slider<Tp>::getMin() const{
 template <class Tp>
 Tp Slider<Tp>::getMax() const{
     return this->_max;
-}
-
-template <class Tp>
-string Slider<Tp>::getTitle() const{
-    return this->_title;
-}
-
-template <class Tp>
-ofColor Slider<Tp>::getBackgroundColor() const{
-    return this->_bgColor;
-}
-
-template <class Tp>
-ofColor Slider<Tp>::getFillColor() const{
-    return this->_fillColor;
-}
-
-template <class Tp>
-ofColor Slider<Tp>::getTextColor() const{
-    return this->_textColor;
 }
 
 template <class Tp>
@@ -250,7 +172,7 @@ Tp Slider<Tp>::exp() const{
 }
 
 template <class Tp>
-void Slider<Tp>::draw() {
+void Slider<Tp>::draw() const{
     ofSetColor(this->_bgColor);
     ofRect( this->_xPos, this->_yPos, this->_width, this->_height);
     ofSetColor(this->_fillColor);
@@ -260,6 +182,7 @@ void Slider<Tp>::draw() {
         ofDrawBitmapString( this->_title, this->_xPos, this->_yPos-1 );
     //ofDrawBitmapString(ofToString(this->val), this->_xPos, this->_yPos + this->_height);
 }
+
 
 // Explicitly instantiate allowed template instances
 template class Slider<int>;

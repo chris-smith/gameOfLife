@@ -58,7 +58,7 @@ void GameBoard::_mousePressed(ofMouseEventArgs& e) {
 void GameBoard::_mouseDragged(ofMouseEventArgs& e) {
     // mouse dragged event
     if ( !this->_isOnGameBoard(e.x, e.y) ) {
-        this->_settingVals = false;
+        //this->_settingVals = false;   // if mouse moves off gameboard, stops drawing
         return;
     }
     if (this->_settingVals) {

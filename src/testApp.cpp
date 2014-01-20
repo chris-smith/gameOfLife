@@ -77,8 +77,8 @@ void testApp::draw(){
         ofDrawBitmapString(setup_string, 10 + board->width(), boardY + 50);
         ofDrawBitmapStringHighlight(running_string, 10 + board->width(), boardY + 70, highlight_bg, highlight_fg);
     }
-    ofDrawBitmapString(ofToString( updateTime.log() ), 10, 10);
-    ofDrawBitmapString(ofToString( updateTime.exp() ), 10, 20);
+    //ofDrawBitmapString(ofToString( updateTime.log() ), 10, 10);
+    //ofDrawBitmapString(ofToString( updateTime.exp() ), 10, 20);
     board->draw();
     gridSize.draw();
     cellSize.draw();
