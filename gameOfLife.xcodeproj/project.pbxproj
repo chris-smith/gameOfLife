@@ -18,6 +18,8 @@
 		B8250FBE187F952B00E0B29C /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8250FB3187F952B00E0B29C /* ofxSlider.cpp */; };
 		B8250FBF187F952B00E0B29C /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8250FB5187F952B00E0B29C /* ofxSliderGroup.cpp */; };
 		B8250FC0187F952B00E0B29C /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8250FB7187F952B00E0B29C /* ofxToggle.cpp */; };
+		B87E02FE188C82AB00703CF8 /* baseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B87E02FC188C82AB00703CF8 /* baseGui.cpp */; };
+		B87E0301188C846F00703CF8 /* guiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B87E02FF188C846F00703CF8 /* guiGroup.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -94,6 +96,10 @@
 		B8250FB6187F952B00E0B29C /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		B8250FB7187F952B00E0B29C /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		B8250FB8187F952B00E0B29C /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		B87E02FC188C82AB00703CF8 /* baseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = baseGui.cpp; sourceTree = "<group>"; };
+		B87E02FD188C82AB00703CF8 /* baseGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseGui.h; sourceTree = "<group>"; };
+		B87E02FF188C846F00703CF8 /* guiGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiGroup.cpp; sourceTree = "<group>"; };
+		B87E0300188C846F00703CF8 /* guiGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiGroup.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -259,6 +265,10 @@
 				B8250F9A187E37A600E0B29C /* cell.h */,
 				B8250FA2187F8F6C00E0B29C /* slider.cpp */,
 				B8250FA3187F8F6C00E0B29C /* slider.h */,
+				B87E02FC188C82AB00703CF8 /* baseGui.cpp */,
+				B87E02FD188C82AB00703CF8 /* baseGui.h */,
+				B87E02FF188C846F00703CF8 /* guiGroup.cpp */,
+				B87E0300188C846F00703CF8 /* guiGroup.h */,
 				B8250F9C187E39C200E0B29C /* gameBoard.cpp */,
 				B8250F9D187E39C200E0B29C /* gameBoard.h */,
 			);
@@ -362,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8250FBC187F952B00E0B29C /* ofxLabel.cpp in Sources */,
+				B87E0301188C846F00703CF8 /* guiGroup.cpp in Sources */,
 				B8250FA4187F8F6C00E0B29C /* slider.cpp in Sources */,
 				B8250F9E187E39C200E0B29C /* gameBoard.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
@@ -369,6 +380,7 @@
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 				B8250FBA187F952B00E0B29C /* ofxButton.cpp in Sources */,
 				B8250FBE187F952B00E0B29C /* ofxSlider.cpp in Sources */,
+				B87E02FE188C82AB00703CF8 /* baseGui.cpp in Sources */,
 				B8250FB9187F952B00E0B29C /* ofxBaseGui.cpp in Sources */,
 				B8250F9B187E37A600E0B29C /* cell.cpp in Sources */,
 				B8250FBD187F952B00E0B29C /* ofxPanel.cpp in Sources */,

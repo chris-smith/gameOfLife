@@ -3,10 +3,6 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     ofBackground(60, 120, 200, 200);
-    boardX = 50;
-    boardY = 50;
-    gridSize = 50;
-    cellSize = 10;
     lastUpdate = ofGetElapsedTimeMillis();
     mouseX = 0;
     mouseY = 0;
@@ -14,16 +10,37 @@ void testApp::setup(){
     highlight_bg = ofColor(80, 140, 220);
     highlight_fg = ofColor(220, 220, 240);
     
-    // create Game Board
-    board = new GameBoard(boardX, boardY, gridSize, cellSize);
-    
-    // Setup for slider
+    // Setup for sliders
     updateTime.setBackgroundColor( ofColor(100,160, 210) );
     updateTime.setFillColor( ofColor(130,190,240) );
-    updateTime.setPosition( 7 + board->width(), boardY + 120 );
     updateTime.setSize( 100, 15 );
     updateTime.setRange( 20, 800 );
     updateTime.setTitle("Update Rate");
+    gridSize = updateTime;
+    gridSize.setTitle("Grid Size");
+    gridSize.setRange(10, 100);
+    cellSize = gridSize;
+    cellSize.setTitle("Cell Size");
+    cellSize.setRange(3, 20);
+    
+    boardX = 50;
+    boardY = 50;
+    gridSize = 50;
+    cellSize = 10;
+    // create Game Board
+    board = new GameBoard(boardX, boardY, gridSize, cellSize);
+    
+    // Position sliders
+    ofPoint pos(7 + board->width(), boardY + 120 );
+    updateTime.setPosition( pos );
+    gridSize.setPosition( pos + ofPoint(0, 30) );
+    cellSize.setPosition( pos + ofPoint(0, 60) );
+    
+    /***************************************
+     Create listeners for gridSize, cellSize
+     Should call board->resize()
+     **************************************/
+    
 }
 
 //--------------------------------------------------------------
@@ -31,7 +48,7 @@ void testApp::update(){
     ofSetColor(200, 0, 200);
     if ( board->running() ){
         // if game is live
-        if ( ofGetElapsedTimeMillis() - lastUpdate > (updateTime.getMax() - updateTime) ) {
+        if ( ofGetElapsedTimeMillis() - lastUpdate > ( updateTime.getMax() - updateTime.log() ) ) {
             // if we need to update the board
             lastUpdate = ofGetElapsedTimeMillis();
             
@@ -60,7 +77,11 @@ void testApp::draw(){
         ofDrawBitmapString(setup_string, 10 + board->width(), boardY + 50);
         ofDrawBitmapStringHighlight(running_string, 10 + board->width(), boardY + 70, highlight_bg, highlight_fg);
     }
+    ofDrawBitmapString(ofToString( updateTime.log() ), 10, 10);
+    ofDrawBitmapString(ofToString( updateTime.exp() ), 10, 20);
     board->draw();
+    gridSize.draw();
+    cellSize.draw();
     updateTime.draw();
 }
 
@@ -81,8 +102,9 @@ void testApp::keyReleased(int key){
             break;
         case 'p':
             // toggle play/pause, save temporary save
+            if ( !board->running() )
+                board->saveTemp();
             board->running(true);
-            board->saveTemp();
             play = !play;
             break;
         case 'c':
@@ -92,6 +114,9 @@ void testApp::keyReleased(int key){
             board->clear();
             lastUpdate = ofGetElapsedTimeMillis();
             break;
+        case 's':
+            // save pattern
+            board->savePattern("");
         default:
             break;
     }

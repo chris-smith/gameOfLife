@@ -8,7 +8,11 @@
 
 #include "slider.h"
 
-Slider::Slider(int x, int y, int width, int height, int min, int max){
+#ifndef __gameOfLife__slider__cpp
+#define __gameOfLife__slider__cpp
+
+template <class Tp>
+Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max){
     // constructor
     this->_xPos = x;
     this->_yPos = y;
@@ -20,7 +24,8 @@ Slider::Slider(int x, int y, int width, int height, int min, int max){
     this->_setup();
 }
 
-Slider::Slider(){
+template <class Tp>
+Slider<Tp>::Slider(){
     // Default constructor
     this->_xPos = 10;
     this->_yPos = 10;
@@ -32,7 +37,8 @@ Slider::Slider(){
     this->_setup();
 }
 
-void Slider::_setup(){
+template <class Tp>
+void Slider<Tp>::_setup(){
     // setup common to both constructors
     this->_bgColor = ofColor(50,50,50);
     this->_fillColor = ofColor(150,150,150);
@@ -46,7 +52,8 @@ void Slider::_setup(){
     ofAddListener(ofEvents().mouseReleased, this, &Slider::_mouseReleased);
 }
 
-void Slider::_mousePressed( ofMouseEventArgs& e){
+template <class Tp>
+void Slider<Tp>::_mousePressed( ofMouseEventArgs& e){
     // mouse pressed event
     if ( !this->_isOnSlider(e.x, e.y) )
         return;
@@ -55,7 +62,8 @@ void Slider::_mousePressed( ofMouseEventArgs& e){
     this->val = this->_sliderPosition * (this->_max - this->_min) / this->_width + this->_min;
 }
 
-void Slider::_mouseDragged(ofMouseEventArgs& e ){
+template <class Tp>
+void Slider<Tp>::_mouseDragged(ofMouseEventArgs& e ){
     // mouse dragged event
     if ( !this->_isOnSlider(e.x, e.y) ) {
         this->_settingVal = false;
@@ -67,13 +75,15 @@ void Slider::_mouseDragged(ofMouseEventArgs& e ){
     }
 }
 
-void Slider::_mouseReleased(ofMouseEventArgs& e){
+template <class Tp>
+void Slider<Tp>::_mouseReleased(ofMouseEventArgs& e){
     // mouse released event
     //  This is unnecessary?
     this->_settingVal = false;
 }
 
-bool Slider::_isOnSlider(int x, int y) {
+template <class Tp>
+bool Slider<Tp>::_isOnSlider(int x, int y) {
     // checks if mouse is on this slider object
     //  used with mouse events
     if ( (x >= this->_xPos) && (x <= this->_xPos + this->_width) ) {
@@ -83,12 +93,20 @@ bool Slider::_isOnSlider(int x, int y) {
     return false;
 }
 
-Slider::operator int() {
-    // integer cast returns value
+template <class Tp>
+Slider<Tp>::operator Tp() {
+    // Tp cast returns value
     return this->val;
 }
 
-Slider& Slider::operator=(const Slider &rhs) {
+template <class Tp>
+Slider<Tp>& Slider<Tp>::operator=(const Tp &rhs) {
+    this->val = rhs;
+    return *this;
+}
+
+template <class Tp>
+Slider<Tp>& Slider<Tp>::operator=(const Slider &rhs) {
     // assignment operator
     if (this != &rhs) {
         this->setPosition( rhs.getPosition() );
@@ -103,79 +121,136 @@ Slider& Slider::operator=(const Slider &rhs) {
     return *this;  // Return a reference to myself.
 }
 
-void Slider::setPosition(int x, int y) {
+template <class Tp>
+void Slider<Tp>::setPosition(int x, int y) {
     this->_xPos = x;
     this->_yPos = y;
 }
 
-void Slider::setPosition(ofPoint pt) {
+template <class Tp>
+void Slider<Tp>::setPosition(ofPoint pt) {
     this->setPosition(pt.x, pt.y);
 }
 
-void Slider::setSize(int width, int height) {
+template <class Tp>
+void Slider<Tp>::offset(int x, int y) {
+    this->_xPos += x;
+    this->_yPos += y;
+}
+
+template <class Tp>
+void Slider<Tp>::setSize(int width, int height) {
     this->_width = width;
     this->_height = height;
 }
 
-void Slider::setRange(int min, int max) {
+template <class Tp>
+void Slider<Tp>::setRange(Tp min, Tp max) {
     this->_min = min;
     this->_max = max;
     this->val = (min + max) / 2;
     this->_sliderPosition = ( this->val - this->_min ) * this->_width / (this->_max - this->_min );
 }
-void Slider::setBackgroundColor(ofColor color) {
+
+template <class Tp>
+void Slider<Tp>::setBackgroundColor(ofColor color) {
     this->_bgColor = color;
 }
 
-void Slider::setFillColor(ofColor color) {
+template <class Tp>
+void Slider<Tp>::setFillColor(ofColor color) {
     this->_fillColor = color;
 }
 
-void Slider::setTextColor(ofColor color) {
+template <class Tp>
+void Slider<Tp>::setTextColor(ofColor color) {
     this->_textColor = color;
 }
 
-void Slider::setTitle(string title) {
+template <class Tp>
+void Slider<Tp>::setTitle(string title) {
     this->_title = title;
 }
 
-ofPoint Slider::getPosition() const{
+template <class Tp>
+ofPoint Slider<Tp>::getPosition() const{
     return ofPoint(this->_xPos, this->_yPos);
 }
 
-int Slider::getHeight() const{
+template <class Tp>
+int Slider<Tp>::getHeight() const{
     return this->_height;
 }
 
-int Slider::getWidth() const{
+template <class Tp>
+int Slider<Tp>::getWidth() const{
     return this->_width;
 }
 
-int Slider::getMin() const{
+template <class Tp>
+Tp Slider<Tp>::getMin() const{
     return this->_min;
 }
 
-int Slider::getMax() const{
+template <class Tp>
+Tp Slider<Tp>::getMax() const{
     return this->_max;
 }
 
-string Slider::getTitle() const{
+template <class Tp>
+string Slider<Tp>::getTitle() const{
     return this->_title;
 }
 
-ofColor Slider::getBackgroundColor() const{
+template <class Tp>
+ofColor Slider<Tp>::getBackgroundColor() const{
     return this->_bgColor;
 }
 
-ofColor Slider::getFillColor() const{
+template <class Tp>
+ofColor Slider<Tp>::getFillColor() const{
     return this->_fillColor;
 }
 
-ofColor Slider::getTextColor() const{
+template <class Tp>
+ofColor Slider<Tp>::getTextColor() const{
     return this->_textColor;
 }
 
-void Slider::draw() {
+template <class Tp>
+Tp Slider<Tp>::log() const{
+    // returns exp scaled value
+    double minp = this->_min;
+    double maxp = this->_max;
+    
+    // The result should be between min and max
+    double minv = log2(minp);
+    double maxv = log2(maxp);
+    
+    // calculate adjustment factor
+    double scale = (maxv-minv) / (maxp-minp);
+    
+    return ((( log2(this->val) - minv ) / scale ) + minp);
+}
+
+template <class Tp>
+Tp Slider<Tp>::exp() const{
+    // returns log scaled value
+    double minp = this->_min;
+    double maxp = this->_max;
+    
+    // The result should be between min and max
+    double minv = log2(minp);
+    double maxv = log2(maxp);
+    
+    // calculate adjustment factor
+    double scale = (maxv-minv) / (maxp-minp);
+    
+    return exp2( minv + scale * ( double(this->val) - minp ) );
+}
+
+template <class Tp>
+void Slider<Tp>::draw() {
     ofSetColor(this->_bgColor);
     ofRect( this->_xPos, this->_yPos, this->_width, this->_height);
     ofSetColor(this->_fillColor);
@@ -185,3 +260,13 @@ void Slider::draw() {
         ofDrawBitmapString( this->_title, this->_xPos, this->_yPos-1 );
     //ofDrawBitmapString(ofToString(this->val), this->_xPos, this->_yPos + this->_height);
 }
+
+// Explicitly instantiate allowed template instances
+template class Slider<int>;
+template class Slider<long>;
+template class Slider<double>;
+template class Slider<float>;
+template class Slider<unsigned int>;
+template class Slider<unsigned long>;
+
+#endif

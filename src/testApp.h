@@ -24,11 +24,13 @@ class testApp : public ofBaseApp{
         void updateTimeChanged(int & newUpdateTime);
     
         GameBoard* board;
-        Slider updateTime;                  // millis to wait to update during run
+        Slider<int> updateTime;                  // millis to wait to update during run
+        Slider<int> gridSize;
+        Slider<int> cellSize;
         int boardX;
         int boardY;
-        int gridSize;
-        int cellSize;
+        //int gridSize;
+        //int cellSize;
         unsigned long long lastUpdate;      // millis of boardgame update time
     
         bool play;                          // play/pause game

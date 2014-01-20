@@ -50,8 +50,7 @@ private:
     void _mouseReleased(ofMouseEventArgs&);
     
     std::vector< std::vector< Cell > > _cells;
-    std::vector< std::vector< Cell > > _initialCells;
-    string _tempLoc;
+    string _tempLoc;                        //  location to save temp data -- board for reset
     int _xPos;
     int _yPos;
     int _cellX;                             //  tracks last cell updated during setup

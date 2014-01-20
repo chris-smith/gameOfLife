@@ -20,14 +20,11 @@ GameBoard::GameBoard(int x,int y,int gridSize, int cellSize) {
     std::vector< Cell > temp;
     temp.clear();
     _cells.clear();
-    _initialCells.clear();
     for (int i = 0; i < gridSize; i++) {
         _cells.push_back(temp);
-        _initialCells.push_back(temp);
         for (int j = 0; j < gridSize; j++) {
             Cell newCell(i,j,cellSize);
             _cells[i].push_back( newCell );
-            _initialCells[i].push_back( newCell );
         }
     }
     
@@ -87,7 +84,6 @@ void GameBoard::_setCells(ofMouseEventArgs& e) {
         // check if on new cell in case of dragging
         if ( (i != this->_cellX) || (j != this->_cellY) ) {
             _constrain(i,j);
-            _initialCells[i][j].living = !_initialCells[i][j].living;
             _cells[i][j].living = !_cells[i][j].living;
             this->_cellX = i;
             this->_cellY = j;
@@ -139,7 +135,6 @@ void GameBoard::clear(){
     for (int i = 0; i < this->_gridSize; i++) {
         for (int j = 0; j < this->_gridSize; j++) {
             _cells[i][j].living = false;
-            _initialCells[i][j].living = false;
         }
     }
     this->_running = false;
@@ -147,11 +142,46 @@ void GameBoard::clear(){
 
 void GameBoard::resize(int gridSize, int cellSize){
     // resize the gameboard. Necessary for loading patterns, other boards,
-    
+    this->_cellSize = cellSize;
+    this->_gridSize = gridSize;
+    std::vector< Cell > temp;
+    temp.clear();
+    _cells.clear();
+    for (int i = 0; i < gridSize; i++) {
+        _cells.push_back(temp);
+        for (int j = 0; j < gridSize; j++) {
+            Cell newCell(i,j,cellSize);
+            _cells[i].push_back( newCell );
+        }
+    }
 }
 
 void GameBoard::savePattern(string path){
     // saves minimum bounding rectangle around current pattern
+    int xMin, xMax, yMin, yMax;
+    xMin = this->_gridSize;
+    xMax = 0;
+    yMin = this->_gridSize;
+    yMax = 0;
+    bool state;
+    for (int i = 0; i < this->_gridSize; i++) {
+        for (int j = 0; j < this->_gridSize; j++) {
+            state = this->_cells[i][j].living;
+            if (state) {
+                // if cell is living, increase bounds where appropriate
+                if (i < xMin)
+                    xMin = i;
+                else if (i > xMax)
+                    xMax = i;
+                if (j < yMin)
+                    yMin = j;
+                else if (j > yMax)
+                    yMax = j;
+            }
+        }
+    }
+    // need save based on cell range
+    cout<<xMin<<" "<<xMax<<" "<<yMin<<" "<<yMax<<"\n";
 }
 
 void GameBoard::save(string path){
