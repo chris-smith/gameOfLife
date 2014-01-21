@@ -23,6 +23,7 @@ public:
     
     // add gui elements to group
     void add(BaseGui*);
+    void draw() const;
     
     // setters
     void setPosition(int,int);
@@ -30,8 +31,13 @@ public:
     void setTitle(string);
     void setTitlePosition(int,int);
     void setTitlePosition(ofPoint);
+    void setOffset(int);
     void setBackgroundColor(ofColor);
+    void setBackgroundColorElements(ofColor);
+    void setFillColor(ofColor);
+    void setFillColorElements(ofColor);
     void setTextColor(ofColor);
+    void setTextColorElements(ofColor);
     
     
     // getters
@@ -39,9 +45,9 @@ public:
     int getHeight() const;
     int getWidth() const;
     string getTitle() const;
-    void getTitlePosition(int,int);
-    void getTitlePosition(ofPoint);
+    ofPoint getTitlePosition() const;
     ofColor getBackgroundColor() const;
+    ofColor getFillColor() const;
     ofColor getTextColor() const;
     int getNumElements() const;
     
@@ -51,9 +57,12 @@ private:
     vector<BaseGui*> _elements;
     
     ofColor _bgColor;
+    ofColor _fillColor;
     ofColor _textColor;
     int _xPos;
     int _yPos;
+    int _xTitle;
+    int _yTitle;
     int _width;
     int _height;
     int _offset;

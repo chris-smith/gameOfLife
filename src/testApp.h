@@ -2,6 +2,7 @@
 
 #include "gameBoard.h"
 #include "ofxGui.h"
+#include "guiGroup.h"
 #include "slider.h"
 //#include "ofMain.h"
 
@@ -27,6 +28,7 @@ class testApp : public ofBaseApp{
         Slider<int> updateTime;                  // millis to wait to update during run
         Slider<int> gridSize;
         Slider<int> cellSize;
+        GuiGroup gui;
         int boardX;
         int boardY;
         //int gridSize;

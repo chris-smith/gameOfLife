@@ -14,10 +14,6 @@
 template <class Tp>
 Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max) : BaseGui(x,y,width,height){
     // constructor
-    this->_xPos = x;
-    this->_yPos = y;
-    this->_width = width;
-    this->_height= height;
     this->_min = min;
     this->_max = max;
     this->val = (min + max) / 2;
@@ -27,10 +23,6 @@ Slider<Tp>::Slider(int x, int y, int width, int height, Tp min, Tp max) : BaseGu
 template <class Tp>
 Slider<Tp>::Slider() : BaseGui(){
     // Default constructor
-    this->_xPos = 10;
-    this->_yPos = 10;
-    this->_width = 100;
-    this->_height= 15;
     this->_min = 0;
     this->_max = 100;
     this->val = 50;
@@ -40,11 +32,7 @@ Slider<Tp>::Slider() : BaseGui(){
 template <class Tp>
 void Slider<Tp>::_setup(){
     // setup common to both constructors
-    this->_bgColor = ofColor(50,50,50);
-    this->_fillColor = ofColor(150,150,150);
-    this->_textColor = ofColor(255,255,255);
     this->_settingVal = false;
-    this->_title = "";
     
     // listen to mouse events
     ofAddListener(ofEvents().mousePressed, this, &Slider::_mousePressed);

@@ -19,8 +19,6 @@
 //  gui.draw(); <-- draws all sliders, other gui elements
 // Maybe slider should be a template so it can deal with int, double, etc
 
-//template <class a_type> class a_class {...};
-
 template <class Tp>
 class Slider : public BaseGui{
 public:

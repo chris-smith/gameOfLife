@@ -35,7 +35,7 @@ void BaseGui::_setup(){
     this->_textColor = ofColor(255,255,255);
     this->_title = "";
     this->_xTitle = 0;
-    this->_yTitle = -10;
+    this->_yTitle = -2;
     
     // listen to mouse events
     ofAddListener(ofEvents().mousePressed, this, &BaseGui::_mousePressed);
@@ -59,6 +59,7 @@ void BaseGui::_mouseDragged(ofMouseEventArgs& e ){
 
 void BaseGui::_mouseReleased(ofMouseEventArgs& e){
     // mouse released event
+    
 }
 
 bool BaseGui::_isOnGui(int x, int y) {
@@ -163,7 +164,10 @@ ofColor BaseGui::getTextColor() const{
 void BaseGui::draw() const{
     ofSetColor(this->_bgColor);
     ofRect( this->_xPos, this->_yPos, this->_width, this->_height);
-    ofSetColor( this->_textColor );
-    if (this->_title != "")
-        ofDrawBitmapString( this->_title, this->_xPos, this->_yPos-1 );
+    if (this->_title != "") {
+        ofSetColor( this->_textColor );
+        int x = this->_xPos + this->_xTitle;
+        int y = this->_yPos + this->_yPos;
+        ofDrawBitmapString( this->_title, x, y );
+    }
 }

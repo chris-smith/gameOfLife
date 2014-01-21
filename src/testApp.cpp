@@ -10,16 +10,16 @@ void testApp::setup(){
     highlight_bg = ofColor(80, 140, 220);
     highlight_fg = ofColor(220, 220, 240);
     
-    // Setup for sliders
-    updateTime.setBackgroundColor( ofColor(100,160, 210) );
-    updateTime.setFillColor( ofColor(130,190,240) );
-    updateTime.setSize( 100, 15 );
+    // Gui setup
+    gui.add(&updateTime);
+    gui.add(&gridSize);
+    gui.add(&cellSize);
+    gui.setBackgroundColorElements( ofColor(100,160, 210) );
+    gui.setFillColorElements( ofColor(130,190,240) );
     updateTime.setRange( 20, 800 );
     updateTime.setTitle("Update Rate");
-    gridSize = updateTime;
     gridSize.setTitle("Grid Size");
     gridSize.setRange(10, 100);
-    cellSize = gridSize;
     cellSize.setTitle("Cell Size");
     cellSize.setRange(3, 20);
     
@@ -32,10 +32,8 @@ void testApp::setup(){
     
     // Position sliders
     ofPoint pos(7 + board->width(), boardY + 120 );
-    updateTime.setPosition( pos );
-    gridSize.setPosition( pos + ofPoint(0, 30) );
-    cellSize.setPosition( pos + ofPoint(0, 60) );
-    
+    gui.setPosition( pos );
+
     /***************************************
      Create listeners for gridSize, cellSize
      Should call board->resize()
@@ -80,9 +78,7 @@ void testApp::draw(){
     //ofDrawBitmapString(ofToString( updateTime.log() ), 10, 10);
     //ofDrawBitmapString(ofToString( updateTime.exp() ), 10, 20);
     board->draw();
-    gridSize.draw();
-    cellSize.draw();
-    updateTime.draw();
+    gui.draw();
 }
 
 //--------------------------------------------------------------
